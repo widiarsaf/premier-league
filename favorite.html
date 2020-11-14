@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#27142F" />
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+    <link rel="icon" href="/assets/icons/icon-152.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="assets/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Football App</title>
+</head>
+
+<body>
+    <nav style="background: #3F1052;" role="navigation">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo" id="logo-container">Premier League</a>
+            <a href="#" class="sidenav-trigger" data-target="nav-mobile">☰</a>
+            <ul class="topnav right hide-on-med-and-down">
+                <li><a class="waves-effect " href="/">Home</a></li>
+                <li><a class="waves-effect " href="favorite.html">Favorite</a></li>
+            </ul>
+            <ul class="sidenav blue-text text-lighten-1" id="nav-mobile">
+                <li><a class="waves-effect " href="/">Home</a></li>
+                <li><a class="waves-effect " href="favorite.html">Favorite</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="favorite-teams">
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
+    <script src="pages/favorite.js"></script>
+</body>
+
+</html>
