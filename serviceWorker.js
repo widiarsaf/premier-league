@@ -87,8 +87,9 @@ workbox.precaching.precacheAndRoute([{
         revision: '1'
     }
 
-
-])
+], {
+    ignoreUrlParametersMatching: [/.*/]
+})
 
 workbox.routing.registerRoute(
     new RegExp('https://api.football-data.org/v2'),
@@ -106,82 +107,38 @@ workbox.routing.registerRoute(
     })
 )
 
-
-
-
-
-/*
-const CACHE_NAME = 'football-caches';
-var urlsToCache = [
-    '/',
-    '/index.html',
-    '/team.html',
-    '/favorite.html',
-    '/manifest.json',
-    '/pages/home.js',
-    '/pages/team.js',
-    '/pages/favorite.js',
-    '/assets/css/materialize.min.css',
-    '/js/api.js',
-    '/js/db.js',
-    '/js/idb.js',
-    '/js/main.js',
-    '/js/materialize.min.js',
-    '/assets/icons/icon-512.png',
-    '/assets/icons/icon-384.png',
-    '/assets/icons/icon-192.png',
-    '/assets/icons/icon-152.png',
-    'https://fonts.googleapis.com/icon?family=Material+Icons',
-    'https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2'
-]
-
-self.addEventListener('install', function (event) {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(function (cache) {
-            cache.addAll(urlsToCache)
-        })
-    )
-})
-
-self.addEventListener('activate', function (event) {
-    event.waitUntil(
-        caches.keys()
-        .then(function (cacheNames) {
-            return Promise.all(
-                cacheNames.map(function (cacheName) {
-                    if (cacheName != CACHE_NAME) {
-                        console.log("ServiceWorker: cache " + cacheName + " dihapus");
-                        return caches.delete(cacheName)
-                    }
-                })
-            )
-        })
-    )
-})
-
-
-self.addEventListener("fetch", function (event) {
-    var base_url = "https://api.football-data.org/v2";
-    if (event.request.url.indexOf(base_url) > -1) {
-        event.respondWith(
-            caches.open(CACHE_NAME).then(function (cache) {
-                return fetch(event.request).then(function (response) {
-                    cache.put(event.request.url, response.clone());
-                    return response;
-                })
+workbox.routing.registerRoute(
+    new RegExp('https://fonts.googleapis.com/icon?family=Material+Icons'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'font',
+        plugins: [
+            new workbox.cacheableResponse.Plugin({
+                statuses: [200],
+            }),
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 5,
             })
-        );
-    } else {
-        event.respondWith(
-            caches.match(event.request, {
-                ignoreSearch: true
-            }).then(function (response) {
-                return response || fetch(event.request);
+        ]
+    })
+)
+
+workbox.routing.registerRoute(
+    new RegExp('https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'icon-materialize',
+        plugins: [
+            new workbox.cacheableResponse.Plugin({
+                statuses: [200],
+            }),
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 5,
             })
-        )
-    }
-});
-*/
+        ]
+    })
+)
+
 
 self.addEventListener('push', function (event) {
     var body;
